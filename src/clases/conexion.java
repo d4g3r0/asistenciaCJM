@@ -10,7 +10,7 @@ public class conexion {
     public Connection conectando() throws ClassNotFoundException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            this.comunicacion = ((Connection) DriverManager.getConnection("jdbc:mysql://192.168.1.25/notas_2016", "maestro", "teacher"));
+            this.comunicacion = ((Connection) DriverManager.getConnection("jdbc:mysql://192.168.1.25/notas_2016", "lista", "lista"));
             System.out.println("Conexion exitosa");
         } catch (SQLException e) {
             System.out.println("Error:" + e);

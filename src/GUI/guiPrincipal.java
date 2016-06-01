@@ -58,7 +58,7 @@ public class guiPrincipal extends javax.swing.JFrame {
         //obtener fecha
         Date hoy = new Date();
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat formatHour = new SimpleDateFormat("hh:MM:ss");
+        SimpleDateFormat formatHour = new SimpleDateFormat("HH:mm:ss");
         String action="";
         if(op1.isSelected()){
             action="Entrada";
@@ -73,7 +73,6 @@ public class guiPrincipal extends javax.swing.JFrame {
             String sqlSearch="SELECT carne FROM asistencia where carne='"+carne+"' AND accion='"+action+"' AND fecha='"+formatDate.format(hoy)+"'";
             Statement st0 = conex.createStatement();
             ResultSet rs0 = st0.executeQuery(sqlSearch);
-            System.out.println(sqlSearch);
             while(rs0.next()){
                op=1;
             }//fin de la busqueda
@@ -82,14 +81,21 @@ public class guiPrincipal extends javax.swing.JFrame {
             }
             switch (op) {
                 case 0:
-                    //insertar registro nuevo
-                    String sqlInsert = "INSERT INTO asistencia (carne,accion,fecha,hora)VALUES(?,?,?,?)";
-                    PreparedStatement st = conex.prepareStatement(sqlInsert);
-                    st.setString(1, carne);
-                    st.setString(2, action);
-                    st.setString(3, String.valueOf(formatDate.format(hoy)));
-                    st.setString(4, String.valueOf(formatHour.format(hoy)));
-                    st.execute();
+                    try {
+                        //insertar registro nuevo
+                        String sqlInsert = "INSERT INTO asistencia (carne,accion,fecha,hora)VALUES(?,?,?,?)";
+                        PreparedStatement st = conex.prepareStatement(sqlInsert);
+                        st.setString(1, carne);
+                        st.setString(2, action);
+                        st.setString(3, String.valueOf(formatDate.format(hoy)));
+                        st.setString(4, String.valueOf(formatHour.format(hoy)));
+                        st.execute();
+                        System.out.println("ingreso realizado"+String.valueOf(formatHour.format(hoy)));
+                    } catch (SQLException e) {
+                        System.out.println(e);
+                    }
+                    
+                    
                     break;
                 case 1:
                     JOptionPane.showMessageDialog(null, "Ya se registro este carne");
